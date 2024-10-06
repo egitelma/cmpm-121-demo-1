@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Bear game";
+const gameName = "Fat Bear Challenge";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -17,3 +17,18 @@ img.src = "src/bear.png";
 btn.append(img);
 app.append(btn);
 
+//Step 2: Add Counter
+const counter_div = document.createElement("div");
+counter_div.id = "counter";
+let counter : number = 0; //eslint pisses me off. stop telling me to change counter to a constant
+counter_div.innerHTML = "0 lbs"
+btn.addEventListener("click", increaseCounter);
+
+app.append(counter_div);
+
+//Functions
+//Step 2 counter function
+function increaseCounter(){
+    counter++;
+    counter_div.innerHTML = `${counter} lbs`;
+}
