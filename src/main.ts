@@ -20,15 +20,16 @@ app.append(btn);
 //Step 2: Add Counter
 const counter_div = document.createElement("div");
 counter_div.id = "counter";
-let counter : number = 0; //eslint pisses me off. stop telling me to change counter to a constant
-counter_div.innerHTML = "0 lbs"
+let counter: number = 0; //eslint pisses me off. stop telling me to change counter to a constant
+counter_div.innerHTML = "0 lbs";
 btn.addEventListener("click", increaseCounter);
+
+function increaseCounter() {
+  counter++;
+  counter_div.innerHTML = `${counter} lbs`;
+}
 
 app.append(counter_div);
 
-//Functions
-//Step 2 counter function
-function increaseCounter(){
-    counter++;
-    counter_div.innerHTML = `${counter} lbs`;
-}
+//Step 3: Automatic Clicking
+setInterval(increaseCounter, 1000);
