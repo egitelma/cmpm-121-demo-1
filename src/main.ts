@@ -8,6 +8,7 @@ const gameName = "Fat Bear Challenge";
 const btn = document.createElement("button");
 const img = document.createElement("img");
 const header = document.createElement("h1");
+const description = document.createElement("h3");
 const counter_div = document.createElement("div");
 const upgrades_div = document.createElement("div");
 const main_div = document.createElement("div");
@@ -27,6 +28,9 @@ const upg3_div = document.createElement("div");
 document.title = gameName;
 header.innerHTML = gameName;
 img.src = bearImg;
+description.innerHTML = "\"Fat Bear Week is an annual event held in October by Katmai National Park and Preserve in Alaska, commemorating the seasonal preparations made by Alaska peninsula brown bears inhabiting Katmai as they ready themselves for their winter hibernation.\"\n<a href='https://en.wikipedia.org/wiki/Fat_Bear_Week'>-Wikipedia</a>";
+description.className = "caption";
+description.id = "description";
 main_div.id = "main";
 counter_div.id = "counter";
 counter_div.innerHTML = "0 lbs";
@@ -46,6 +50,7 @@ upg3_p.className = "caption";
 app.append(upgrades_div);
 app.append(main_div);
 main_div.append(header);
+main_div.append(description);
 main_div.append(counter_div);
 main_div.append(growth_display);
 main_div.append(btn);
@@ -76,9 +81,15 @@ let upg3_cost: number = 1000;
 
 //Event listeners
 btn.addEventListener("click", () => increaseCounter(1));
-upgrade1.addEventListener("click", () => purchaseUpgrade(upg1_cost, upgrade1, 0.1));
-upgrade2.addEventListener("click", () => purchaseUpgrade(upg2_cost, upgrade2, 2.0));
-upgrade3.addEventListener("click", () => purchaseUpgrade(upg3_cost, upgrade3, 50.0));
+upgrade1.addEventListener("click", () =>
+  purchaseUpgrade(upg1_cost, upgrade1, 0.1),
+);
+upgrade2.addEventListener("click", () =>
+  purchaseUpgrade(upg2_cost, upgrade2, 2.0),
+);
+upgrade3.addEventListener("click", () =>
+  purchaseUpgrade(upg3_cost, upgrade3, 50.0),
+);
 
 //Functions
 function increaseCounter(amt: number) {
