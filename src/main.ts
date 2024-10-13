@@ -2,15 +2,16 @@ import "./style.css";
 import bearImg from "./bear.png";
 
 interface Item {
-  name: string,
-  cost: number,
-  rate: number,
-  quantity: number,
-  p: HTMLParagraphElement,
-  div: HTMLDivElement,
-  btn: HTMLButtonElement,
-  lc_pl: string //only thing that needs to be explained probably; lc_pl = lowercase plural, it's for the item description
-};
+  name: string;
+  cost: number;
+  rate: number;
+  quantity: number;
+  p: HTMLParagraphElement;
+  div: HTMLDivElement;
+  btn: HTMLButtonElement;
+  lc_pl: string; //only thing that needs to be explained probably; lc_pl = lowercase plural, it's for the item description
+  description: string;
+}
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -24,47 +25,63 @@ const description = document.createElement("h3");
 const counter_div = document.createElement("div");
 const upgrades_div = document.createElement("div");
 const main_div = document.createElement("div");
-//  upgrades
-// const upgrade1 = 
-// const upgrade2 = document.createElement("button");
-// const upgrade3 = document.createElement("button");
 const growth_display = document.createElement("p");
-// const upg1_p = 
-// const upg2_p = document.createElement("p");
-// const upg3_p = document.createElement("p");
-// const upg2_div = document.createElement("div");
-// const upg3_div = document.createElement("div");
 
-const availableItems : Item[] = [
+const availableItems: Item[] = [
   {
-    name: "Salmon-rich Lake", 
-    cost: 10, 
-    rate: 0.1, 
+    name: "Salmon-rich Lake",
+    cost: 10,
+    rate: 0.1,
     quantity: 0,
-    p: document.createElement("p"), 
-    div: document.createElement("div"), 
+    p: document.createElement("p"),
+    div: document.createElement("div"),
     btn: document.createElement("button"),
-    lc_pl: "lakes"
+    lc_pl: "lakes",
+    description: "Stake your claim on a freshwater lake and the stores of salmon teeming within. You feel your power increase with every bite. Just make sure not to overfish..."
   },
   {
-    name: "Salmon Fishery", 
-    cost: 100, 
-    rate: 2, 
+    name: "Salmon Fishery",
+    cost: 100,
+    rate: 2,
     quantity: 0,
-    p: document.createElement("p"), 
-    div: document.createElement("div"), 
+    p: document.createElement("p"),
+    div: document.createElement("div"),
     btn: document.createElement("button"),
-    lc_pl: "fisheries"
+    lc_pl: "fisheries",
+    description: "You've figured out how to breed salmon for your easy consumption: congrats! Your pure mass grows with every fish that meets its maker in your belly."
   },
   {
-    name: "Salmon Cannery", 
-    cost: 1000, 
-    rate: 50, 
+    name: "Salmon Cannery",
+    cost: 1000,
+    rate: 50,
     quantity: 0,
-    p: document.createElement("p"), 
-    div: document.createElement("div"), 
+    p: document.createElement("p"),
+    div: document.createElement("div"),
     btn: document.createElement("button"),
-    lc_pl: "canneries"
+    lc_pl: "canneries",
+    description: "Begin the establishment of your salmon-flavored empire and build a factory to shovel salmon directly into your powerful maw. No other being in this world can match your might."
+  },
+  {
+    name: "Saltwater Salmon Ocean",
+    cost: 2000,
+    rate: 200,
+    quantity: 0,
+    p: document.createElement("p"),
+    div: document.createElement("div"),
+    btn: document.createElement("button"),
+    lc_pl: "oceans",
+    description: "Did you know that 71% of the Earth's surface is covered in ocean? Claim dominion over these waters beyond the continents. You are simply too powerful of a bear to fish in paltry lakes for your next meal."
+  },
+  {
+    name: "Interplanetary Salmon Travel",
+    cost: 10000,
+    rate: 1000,
+    quantity: 0,
+    p: document.createElement("p"),
+    div: document.createElement("div"),
+    btn: document.createElement("button"),
+    lc_pl: "planets",
+    description: "Not satisfied with the amount of salmon on your homeworld, you use your significant mass to launch away from Earth and find a new planet. No salmon population in the galaxy is safe from extinction with you around."
   }
 ];
 
@@ -93,11 +110,11 @@ main_div.append(btn);
 btn.append(img);
 
 //Main button event listener
-btn.addEventListener("click", () => increaseCounter(1));
+btn.addEventListener("click", () => increaseCounter(2000));
 
 //Establish upgrades
 let count = 0;
-for(const item of availableItems){
+for (const item of availableItems) {
   //establish properties
   item.btn.innerHTML = `${item.name} (${item.cost})`;
   item.btn.disabled = true;
@@ -128,15 +145,15 @@ function increaseCounter(amt: number) {
 }
 
 function increaseGrowth(ind: number) {
-  const item : Item = availableItems[ind];
-  
+  const item: Item = availableItems[ind];
+
   growth_rate += item.rate;
   growth_display.innerHTML = `${growth_rate.toFixed(1)} lbs/sec`;
 
   item.quantity++;
   item.cost *= 1.15;
   item.btn.innerHTML = `${item.name} (${item.cost.toFixed(2)})`;
-  item.p.innerHTML = `Currently feeding from ${item.quantity} ${item.lc_pl}\n(${(item.rate * item.quantity).toFixed(1)} lbs/sec)`;
+  item.p.innerHTML = `${item.description}\n<em>Currently feeding from ${item.quantity} ${item.lc_pl}\n(${(item.rate * item.quantity).toFixed(1)} lbs/sec)</em>`;
 }
 
 function startIncrement() {
@@ -168,8 +185,8 @@ function purchaseUpgrade(ind: number) {
 }
 
 function checkUpgrades() {
-  for(const item of availableItems){
-    if(counter >= item.cost){
+  for (const item of availableItems) {
+    if (counter >= item.cost) {
       item.btn.disabled = false;
     }
   }
