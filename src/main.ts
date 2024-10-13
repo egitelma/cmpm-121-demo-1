@@ -70,12 +70,15 @@ let growth_rate: number = 0; //AKA growthrate
 let upg1_count: number = 0;
 let upg2_count: number = 0;
 let upg3_count: number = 0;
+let upg1_cost: number = 10;
+let upg2_cost: number = 100;
+let upg3_cost: number = 1000;
 
 //Event listeners
 btn.addEventListener("click", () => increaseCounter(1));
-upgrade1.addEventListener("click", () => purchaseUpgrade(1, upgrade1, 0.1));
-upgrade2.addEventListener("click", () => purchaseUpgrade(2, upgrade2, 2.0));
-upgrade3.addEventListener("click", () => purchaseUpgrade(3, upgrade3, 50.0));
+upgrade1.addEventListener("click", () => purchaseUpgrade(upg1_cost, upgrade1, 0.1));
+upgrade2.addEventListener("click", () => purchaseUpgrade(upg2_cost, upgrade2, 2.0));
+upgrade3.addEventListener("click", () => purchaseUpgrade(upg3_cost, upgrade3, 50.0));
 
 //Functions
 function increaseCounter(amt: number) {
@@ -88,21 +91,27 @@ function increaseCounter(amt: number) {
   checkUpgrades();
 }
 
-function increaseGrowth(amt: number){
+function increaseGrowth(amt: number) {
   growth_rate += amt;
   growth_display.innerHTML = `${growth_rate.toFixed(1)} lbs/sec`;
-  switch(amt){
+  switch (amt) {
     case 0.1:
       upg1_count++;
-      upg1_p.innerHTML = `Currently feeding from ${upg1_count} lakes\n(${(0.1*upg1_count).toFixed(1)} lbs/sec)`;
+      upg1_p.innerHTML = `Currently feeding from ${upg1_count} lakes\n(${(0.1 * upg1_count).toFixed(1)} lbs/sec)`;
+      upg1_cost *= 1.15;
+      upgrade1.innerHTML = `Salmon-rich Lake (${upg1_cost.toFixed(2)})`;
       break;
     case 2.0:
       upg2_count++;
-      upg2_p.innerHTML = `Currently feeding from ${upg2_count} fisheries\n(${(2.0*upg2_count).toFixed(1)} lbs/sec)`;
+      upg2_p.innerHTML = `Currently feeding from ${upg2_count} fisheries\n(${(2.0 * upg2_count).toFixed(1)} lbs/sec)`;
+      upg2_cost *= 1.15;
+      upgrade2.innerHTML = `Salmon Fishery (${upg2_cost.toFixed(2)})`;
       break;
     case 50.0:
       upg3_count++;
-      upg3_p.innerHTML = `Currently feeding from ${upg3_count} cannieries\n(${(5.0*upg3_count).toFixed(1)} lbs/sec)`;
+      upg3_p.innerHTML = `Currently feeding from ${upg3_count} cannieries\n(${(5.0 * upg3_count).toFixed(1)} lbs/sec)`;
+      upg3_cost *= 1.15;
+      upgrade3.innerHTML = `Salmon Cannery (${upg3_cost.toFixed(2)})`;
       break;
   }
 }
@@ -111,37 +120,42 @@ function startIncrement() {
   setInterval(growth, 100);
 }
 
-function growth(){
+function growth() {
   increaseCounter(growth_rate * 0.1); //0.1 due to interval rate
 }
 
 //Start running
-function purchaseUpgrade(upgradeNum : number, upgradeBtn : HTMLButtonElement, growthIncr : number) {
-  if (counter >= 10 ** upgradeNum) { //10^1, 10^2=100, 10^3=1000
+function purchaseUpgrade(
+  upgradeCost: number,
+  upgradeBtn: HTMLButtonElement,
+  growthIncr: number,
+) {
+  if (counter >= upgradeCost) {
+    //10^1, 10^2=100, 10^3=1000
     //start the increment if needed (only necessary once)
-    if(growth_rate == 0) {
+    if (growth_rate == 0) {
       startIncrement();
-    };
+    }
 
     //actually add to the growth rate & counter
-    increaseCounter(-1*(10 ** upgradeNum));
+    increaseCounter(-1 * upgradeCost);
     increaseGrowth(growthIncr);
 
     //re-disable the button if needed
-    if (counter < 10 ** upgradeNum) {
+    if (counter < upgradeCost) {
       upgradeBtn.disabled = true;
     }
   }
 }
 
 function checkUpgrades() {
-  if (counter >= 10) {
+  if (counter >= upg1_cost) {
     upgrade1.disabled = false;
   }
-  if (counter >= 100){
+  if (counter >= upg2_cost) {
     upgrade2.disabled = false;
   }
-  if (counter >= 1000){
+  if (counter >= upg3_cost) {
     upgrade3.disabled = false;
   }
 }
