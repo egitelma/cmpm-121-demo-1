@@ -9,7 +9,7 @@ interface Item {
   p: HTMLParagraphElement;
   div: HTMLDivElement;
   btn: HTMLButtonElement;
-  plural: string; 
+  plural: string;
   description: string;
 }
 
@@ -121,11 +121,10 @@ const cost_multiplier = 1.15;
 let count = 0;
 
 //Main button event listener
-btn.addEventListener("click", () => increaseCounter(2000));
+btn.addEventListener("click", () => increaseCounter(1));
 
 //Establish upgrades
 for (const item of available_items) {
-
   item.btn.innerHTML = `${item.name} (${item.cost})`;
   item.btn.disabled = true;
   item.p.className = "caption";
@@ -192,7 +191,7 @@ function checkUpgrades() {
   }
 }
 
-function updateItem(item : Item) {
+function updateItem(item: Item) {
   item.quantity++;
   item.cost *= cost_multiplier;
   item.btn.innerHTML = `${item.name} (${item.cost.toFixed(2)})`;
