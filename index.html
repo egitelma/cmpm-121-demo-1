@@ -10,16 +10,22 @@
         flex-direction: row;
         border: 2px solid lightgray;
         border-radius: 5px;
+        height: 100vh;
       }
       #sidebar {
-        padding-right: 20px;
-        border-right: 1px solid lightgray;
+        padding: 20px;
+        /* border-right: 1px solid gray; */
+        background-color: lightgray;
+        border-radius: 20px;
       }
       #main {
         padding-left: 20px;
       }
       #sidebar > div {
         margin-bottom: 20px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
       }
       .caption {
         color: gray;

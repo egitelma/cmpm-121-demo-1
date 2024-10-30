@@ -103,6 +103,7 @@ main_div.id = "main";
 counter_div.id = "counter";
 counter_div.innerHTML = "0 lbs";
 upgrades_div.id = "sidebar";
+btn.id = "main_btn";
 
 //Insert properly into DOM
 app.append(upgrades_div);
